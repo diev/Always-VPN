@@ -1,4 +1,4 @@
-# [Always-VPN](http://diev.github.io/Always-VPN)
+# [Always VPN](http://diev.github.io/Always-VPN)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7wy8kb9ub5mgp25x?svg=true)](https://ci.appveyor.com/project/diev/always-vpn)
 [![GitHub Release](https://img.shields.io/github/release/diev/Always-VPN.svg)](https://github.com/diev/Always-VPN/releases/latest)
@@ -38,8 +38,9 @@ Use VPN or On ne passe pas!
 * При разблокировании рабочей станции любым пользователем
 
 удаляет все действующие к этому моменту маршруты по умолчанию (то есть 
-выход в Интернет) и прописывает маршрут только на *IP* указанного 
-сервера VPN, а затем, если соединения с ним нет, поднимает его.
+выход в Интернет), очищает кэш маршрутов и прописывает едиственный маршрут 
+только на *IP* указанного сервера VPN, а затем, если соединения с ним нет, 
+поднимает его.
 
 ## Настройка
 
@@ -72,6 +73,14 @@ HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Rasman\Parameters\Negotiate
 В файле **always_vpn.cmd** указать две используемые константы:
 * название соединения (set vpn=*tunnel*) 
 * адрес сервера (set ip=*IP*).
+
+Если название содержит пробелы, то здесь записывать БЕЗ кавычек - например, 
+set vpn=*VPN Tunnel IKEv2*. Регистр значения не имеет. Тем не менее, 
+всегда лучше, если такие названия будут одним английским словом.
+
+Адрес лучше указывать цифрами (как *127.0.0.1*, указанный для примера в 
+программе), так как DNS может оказаться недоступен при удалении прежнего 
+шлюза. 
 
 Также сохраните себе куда-нибудь на бумажку шлюзы по умолчанию с Ваших 
 сетевых адаптеров - программа их очистит!
@@ -107,7 +116,16 @@ HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Rasman\Parameters\Negotiate
 переподключения сетей не вернут выход в Интернет без поднятия заданного 
 VPN! В этом ведь и заключается главная задача этой программы!
 
-## IPv6 (ToDo)
+Если шлюз по умолчанию на бумажку не записали, то его можно посмотреть 
+в правой колонке выдачи команды:
+
+```
+netsh int ipv4 show route | find "127.0.0.1/32"
+```
+
+где вместо 127.0.0.1 указать *IP* Вашего сервера.
+
+## IPv6
 
 Данный код обрабатывает только IPv4, поскольку и Windows не добавляет 
 маршрут IPv6 по умолчанию. Это можно сделать командой вида:
@@ -117,7 +135,7 @@ netsh interface ipv6 add route ::/0 interface=27
 ```
 
 где 27 - для примера это наш интерфейс IKEv2.
-Или патчить strongSwan issue [#817](https://wiki.strongswan.org/issues/817).
+Или патчить *strongSwan* issue [#817](https://wiki.strongswan.org/issues/817).
 
 ## Лицензионное соглашение
 
