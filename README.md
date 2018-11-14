@@ -1,6 +1,6 @@
 # [Always VPN](http://diev.github.io/Always-VPN)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/7wy8kb9ub5mgp25x?svg=true)](https://ci.appveyor.com/project/diev/always-vpn)
+[![Build status](https://ci.appveyor.com/api/projects/status/bq1u869v35o09nai?svg=true)](https://ci.appveyor.com/project/diev/always-vpn)
 [![GitHub Release](https://img.shields.io/github/release/diev/Always-VPN.svg)](https://github.com/diev/Always-VPN/releases/latest)
 
 Use VPN or On ne passe pas!  
