@@ -1,0 +1,65 @@
+version: '{build}'
+pull_requests:
+  do_not_increment_build_number: true
+skip_tags: true
+skip_branch_with_pr: true
+init:
+- cmd: >-
+    tzutil /s "Russian Standard Time"
+
+    git config --global core.autocrlf input
+install:
+- ps: >-
+    $AppFile = 'vpn\always_vpn.cmd'
+
+    $RegularExpression = [regex] 'version=(\d*\.\d*\.\d*)$'
+
+    $FileContent = Get-Content $AppFile
+
+    foreach($content in $FileContent) {
+      $match = [System.Text.RegularExpressions.Regex]::Match($content, $RegularExpression)
+      if($match.Success) {
+        $env:VERSION = $match.groups[1].value
+        break;
+      }
+    }
+
+    Update-AppveyorBuild -Version ("{0} build {1}" -f $env:VERSION, $env:APPVEYOR_BUILD_NUMBER)
+
+    $CommitDateTime = [datetime]::Parse($env:APPVEYOR_REPO_COMMIT_TIMESTAMP)
+
+    $env:BuildDate = $CommitDateTime.ToString('yyyy-MM-dd')
+
+    $env:Site = "http://{0}.github.io/{1}" -f $env:APPVEYOR_ACCOUNT_NAME, $env:APPVEYOR_PROJECT_NAME
+
+    Write-Host "Building v$env:APPVEYOR_BUILD_VERSION dated $env:BuildDate"
+build_script:
+- cmd: >-
+    echo vpn\*.* >>Package
+
+    echo %APPVEYOR_PROJECT_NAME% v%APPVEYOR_BUILD_VERSION% (%BUILDDATE%) >readme.txt
+
+    echo %SITE% >>readme.txt
+
+    echo [InternetShortcut] >readme.url
+
+    echo URL=%SITE% >>readme.url
+
+    7z a Always-VPN-v%VERSION%.zip @Package readme.txt readme.url
+artifacts:
+- path: Always-VPN-v$(version).zip
+  name: AppZip
+deploy:
+- provider: GitHub
+  tag: v$(version)
+  release: Always VPN v$(version)
+  description: 'Build #$(appveyor_build_number) by AppVeyor $(BuildDate): $(appveyor_repo_commit_message) ([Changelog](https://github.com/$(appveyor_repo_name)/blob/master/CHANGELOG.md))\nSee docs on $(Site)'
+  auth_token:
+    secure: CePfctnBFd3iDwgVWlGOD6mfxQZrNBHK7IpsCK/deo2vHxA3lTr2nRnhbqpKqchQ
+  artifact: AppZip
+  force_update: true
+
+skip_commits:
+  files:
+    - docs\*
+    - '**\*.md'
