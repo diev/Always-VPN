@@ -155,6 +155,11 @@ VPN! В этом ведь и заключается главная задача 
 Copyright (c) 2015 – 2018 George MacKerron.
 Released under the [MIT licence].
 
+Также скрипт использует проект [ValdikSS/easy-rsa-ipsec] для генерации
+сертификатов RSA для сервера и клиентов, forked from Easy-RSA 3.
+Copyright (C) 2013 by the Open-Source OpenVPN development community.
+Easy-RSA 3 license: GPLv2.
+
 ## Лицензионное соглашение
 
 Licensed under the [Apache License, Version 2.0].
@@ -171,6 +176,7 @@ Licensed under the [Apache License, Version 2.0].
 [MIT licence]: http://opensource.org/licenses/mit-license
 
 [jawj/IKEv2-setup]: https://github.com/jawj/IKEv2-setup
+[ValdikSS/easy-rsa-ipsec]: https://github.com/ValdikSS/easy-rsa-ipsec 
 [Always-VPN]: http://diev.github.io/Always-VPN
 
 [appveyor]: https://ci.appveyor.com/project/{{ site.github.repository_nwo }}
