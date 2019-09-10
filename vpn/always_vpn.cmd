@@ -1,5 +1,5 @@
 @echo off
-set version=1.0.3
+set version=1.0.4
 title Always VPN v%version%
 color 1B
 

@@ -1,7 +1,7 @@
-# [Always VPN](http://diev.github.io/Always-VPN)
+# [Always VPN]
 
-[![Build status](https://ci.appveyor.com/api/projects/status/bq1u869v35o09nai?svg=true)](https://ci.appveyor.com/project/diev/always-vpn)
-[![GitHub Release](https://img.shields.io/github/release/diev/Always-VPN.svg)](https://github.com/diev/Always-VPN/releases/latest)
+[![Build status]][appveyor]
+[![GitHub Release]][releases]
 
 Use VPN or On ne passe pas!  
 Интернет или только через VPN, или больше никак!
@@ -64,13 +64,12 @@ Use VPN or On ne passe pas!
 по умолчанию. Чтобы форсировать их использование, в реестр надо добавить 
 параметр типа *DWORD (32 bit)* со значением **2**:
 
-```
-HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Rasman\Parameters\NegotiateDH2048_AES256
-```
+    HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Rasman\Parameters\NegotiateDH2048_AES256
 
 ### Шаг 2: Прописывание констант
 
 В файле **always_vpn.cmd** указать две используемые константы:
+
 * название соединения (set vpn=*tunnel*) 
 * адрес сервера (set ip=*IP*).
 
@@ -107,6 +106,7 @@ set vpn=*VPN Tunnel IKEv2*. Регистр значения не имеет. Т�
 ## Прекращение деятельности
 
 При необходимости все отключить, надо:
+
 * *Отключить* выполнение задания в *Планировщике заданий*, 
 * у статических (чаще кабельных) сетевых адаптеров прописать обратно 
 их *шлюз по умолчанию*, который удалила эта программа, 
@@ -119,9 +119,7 @@ VPN! В этом ведь и заключается главная задача 
 Если шлюз по умолчанию на бумажку не записали, то его можно посмотреть 
 в правой колонке выдачи команды:
 
-```
-netsh int ipv4 show route | find "127.0.0.1/32"
-```
+    netsh int ipv4 show route | find "127.0.0.1/32"
 
 где вместо 127.0.0.1 указать *IP* Вашего сервера.
 
@@ -130,16 +128,51 @@ netsh int ipv4 show route | find "127.0.0.1/32"
 Данный код обрабатывает только IPv4, поскольку и Windows не добавляет 
 маршрут IPv6 по умолчанию. Это можно сделать командой вида:
 
-```
-netsh interface ipv6 add route ::/0 interface=27
-```
+    netsh interface ipv6 add route ::/0 interface=27
 
 где 27 - для примера это наш интерфейс IKEv2.
 Или патчить *strongSwan* issue [#817](https://wiki.strongswan.org/issues/817).
 
+## Создание VPN-сервера
+
+Собственно, создание самого сервера осуществляется скриптом `vps-setup.sh`.
+Выполняются команды:
+
+    cd /tmp
+    wget https://raw.githubusercontent.com/diev/Always-VPN/master/vps-setup.sh
+    chmod u+x vps-setup.sh
+    ./vps-setup.sh
+
+Для скачивания также можно использовать сокращенный URL, но тогда с указанием
+имени для сохранения файла:
+
+    wget https://git.io/JemOz -o vps-setup.sh
+
+## Благодарности
+
+Код скрипта создания сервера основан на проекте [jawj/IKEv2-setup].
+Copyright (c) 2015 – 2018 George MacKerron.
+Released under the [MIT licence].
+
 ## Лицензионное соглашение
 
-Licensed under the [Apache License, 
-Version 2.0](http://www.apache.org/licenses/LICENSE-2.0 "LICENSE").  
+Licensed under the [Apache License, Version 2.0].
 Вы можете использовать этот код совершенно свободно без всяких ограничений 
 с моей стороны и без претензий с Вашей.
+
+[Wiki]: {{ site.github.wiki_url }}
+[Идеи]: {{ site.github.repository_url }}/projects/1
+[Issues]: {{ site.github.issues_url }}
+[releases]: {{ site.github.releases_url }}/latest
+
+[CHANGELOG]: {{ site.github.repository_url }}/blob/master/CHANGELOG.md
+[Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0 "LICENSE"
+[MIT licence]: http://opensource.org/licenses/mit-license
+
+[jawj/IKEv2-setup]: https://github.com/jawj/IKEv2-setup
+[Always-VPN]: http://diev.github.io/Always-VPN
+
+[appveyor]: https://ci.appveyor.com/project/{{ site.github.repository_nwo }}
+
+[Build status]: https://ci.appveyor.com/api/projects/status/bq1u869v35o09nai?svg=true
+[GitHub Release]: https://img.shields.io/github/release/{{ site.github.repository_nwo }}.svg
