@@ -1,4 +1,4 @@
-# [Always VPN]
+# [Always-VPN]
 
 [![Build status]][appveyor]
 [![GitHub Release]][releases]
@@ -132,6 +132,7 @@ VPN! В этом ведь и заключается главная задача 
 
 где 27 - для примера это наш интерфейс IKEv2.
 Или патчить *strongSwan* issue [#817](https://wiki.strongswan.org/issues/817).
+Поэтому скрипт создания сервера также только IPv4.
 
 ## Создание VPN-сервера
 
@@ -146,7 +147,7 @@ VPN! В этом ведь и заключается главная задача 
 Для скачивания также можно использовать сокращенный URL, но тогда с указанием
 имени для сохранения файла:
 
-    wget https://git.io/JemOz -o vps-setup.sh
+    wget https://git.io/JemOz -O vps-setup.sh
 
 ## Благодарности
 
