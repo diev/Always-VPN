@@ -59,12 +59,20 @@ Use VPN or On ne passe pas!
 в списке *IP версии 4 (TCP/IPv4)*, *Свойства*, *Дополнительно*, 
 *Параметры IP* и там поставить эту галочку.
 
-В процессе подключения новых Windows 10 может быть ошибка вида 
+В процессе подключения Windows 8.1/10 может появиться ошибка вида 
 *Policy match error* из-за отключенности *AES-256-CBC and MODP2048* 
 по умолчанию. Чтобы форсировать их использование, в реестр надо добавить 
-параметр типа *DWORD (32 bit)* со значением **2**:
+параметр:
 
-    HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Rasman\Parameters\NegotiateDH2048_AES256
+    [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RasMan\Parameters]
+    "NegotiateDH2048_AES256"=dword:00000002
+
+При использовании числового IP вместо символьного имени DNS скорее всего
+понадобится также добавить в реестр еще один параметр (или попробовать сервис
+[sslip.io]):
+
+    [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RasMan\Parameters]
+    "DisableIKENameEkuCheck"=dword:00000001
 
 ### Шаг 2: Прописывание констант
 
@@ -131,7 +139,7 @@ VPN! В этом ведь и заключается главная задача 
     netsh interface ipv6 add route ::/0 interface=27
 
 где 27 - для примера это наш интерфейс IKEv2.
-Или патчить *strongSwan* issue [#817](https://wiki.strongswan.org/issues/817).
+Или патчить *strongSwan* issue [#817].
 Поэтому скрипт создания сервера также только IPv4.
 
 ## Создание VPN-сервера
@@ -175,9 +183,11 @@ Licensed under the [Apache License, Version 2.0].
 [Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0 "LICENSE"
 [MIT licence]: http://opensource.org/licenses/mit-license
 
-[jawj/IKEv2-setup]: https://github.com/jawj/IKEv2-setup
-[ValdikSS/easy-rsa-ipsec]: https://github.com/ValdikSS/easy-rsa-ipsec 
 [Always-VPN]: http://diev.github.io/Always-VPN
+[sslip.io]: https://sslip.io/
+[#817]: https://wiki.strongswan.org/issues/817
+[jawj/IKEv2-setup]: https://github.com/jawj/IKEv2-setup
+[ValdikSS/easy-rsa-ipsec]: https://github.com/ValdikSS/easy-rsa-ipsec
 
 [appveyor]: https://ci.appveyor.com/project/{{ site.github.repository_nwo }}
 

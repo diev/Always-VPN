@@ -1,0 +1,5 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RasMan\Parameters]
+"NegotiateDH2048_AES256"=dword:00000002
+"DisableIKENameEkuCheck"=dword:00000001
