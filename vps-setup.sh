@@ -5,7 +5,7 @@
 # Copyright (c) 2015 – 2018 George MacKerron
 # Released under the MIT licence: http://opensource.org/licenses/mit-license
 
-#DE edition 2019-09-11
+#DE edition 2019-12-23
 
 echo
 echo "=== diev/Always-VPN ==="
@@ -33,7 +33,7 @@ add-apt-repository multiverse
 apt-get -o Acquire::ForceIPv4=true --with-new-pkgs upgrade -y
 apt autoremove -y
 
-apt-get -o Acquire::ForceIPv4=true install -y language-pack-en strongswan libstrongswan-standard-plugins strongswan-libcharon libcharon-standard-plugins libcharon-extra-plugins moreutils iptables-persistent unattended-upgrades dnsutils uuid-runtime git mc
+apt-get -o Acquire::ForceIPv4=true install -y language-pack-en strongswan libstrongswan-standard-plugins strongswan-libcharon libcharon-standard-plugins libcharon-extra-plugins moreutils iptables-persistent unattended-upgrades dnsutils uuid-runtime git mc fail2ban
 
 echo
 echo "--- Configuration: VPN settings ---"
