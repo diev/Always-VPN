@@ -6,6 +6,10 @@
 Use VPN or On ne passe pas!  
 Интернет или только через VPN, или больше никак!
 
+## Last News
+
+Вместо этого пакета теперь используется аналогичный [скрипт для WireGuard].
+
 ## Для чего
 
 Есть, например, домашняя сетка. Во враждебном окружении разных провайдеров 
@@ -188,6 +192,8 @@ Licensed under the [Apache License, Version 2.0].
 [#817]: https://wiki.strongswan.org/issues/817
 [jawj/IKEv2-setup]: https://github.com/jawj/IKEv2-setup
 [ValdikSS/easy-rsa-ipsec]: https://github.com/ValdikSS/easy-rsa-ipsec
+
+[скрипт для WireGuard]: https://github.com/burghardt/easy-wg-quick/
 
 [appveyor]: https://ci.appveyor.com/project/diev/always-vpn
 

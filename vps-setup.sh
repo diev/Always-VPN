@@ -1,10 +1,15 @@
 #!/bin/bash -e
 
 # https://github.com/diev/Always-VPN
+
 # based on github.com/jawj/IKEv2-setup
 # Copyright (c) 2015 – 2018 George MacKerron
 # Released under the MIT licence: http://opensource.org/licenses/mit-license
 
+# also uses github.com/ValdikSS/easy-rsa-ipsec
+# forked from github.com/OpenVPN/easy-rsa
+
+#DE edition 2021-04-07 Add Ubuntu 20.04
 #DE edition 2019-12-23
 
 echo
@@ -16,7 +21,7 @@ function exit_badly {
   exit 1
 }
 
-[[ $(lsb_release -rs) == "18.04" ]] || exit_badly "This script is for Ubuntu 18.04 only, aborting (if you know what you're doing, delete this check)."
+[[ $(lsb_release -rs) == "18.04" ]] || [[ $(lsb_release -rs) == "20.04" ]] || exit_badly "This script is for Ubuntu 20.04 or 18.04 only: aborting (if you know what you're doing, try deleting this check)"
 [[ $(id -u) -eq 0 ]] || exit_badly "Please re-run as root (e.g. sudo ./$0)"
 
 echo "--- Updating and installing software ---"
